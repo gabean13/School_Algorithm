@@ -1,0 +1,7 @@
+﻿  1.c
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\과제 2\1.c(41,21): warning C4020: 'quickSort': too many actual parameters
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\과제 2\1.c(68,2): warning C4033: 'quickSort' must return a value
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\과제 2\1.c(69): warning C4716: 'quickSort': must return a value
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\과제 2\1.c(98): warning C4716: 'rQuickSort': must return a value
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\과제 2\1.c(179): warning C4715: 'findIndexOfMedianOfThree': not all control paths return a value
+  과제 2.vcxproj -> C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\과제 2\Debug\과제 2.exe

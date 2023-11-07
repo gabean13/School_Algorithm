@@ -1,0 +1,9 @@
+﻿  1.c
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(27,16): warning C4047: 'function': 'Node *' differs in levels of indirection from 'Node **'
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(27,11): warning C4024: 'newNode': different types for formal and actual parameter 1
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(29,17): warning C4047: 'function': 'Node *' differs in levels of indirection from 'Node **'
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(29,12): warning C4024: 'printNode': different types for formal and actual parameter 1
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(32,22): warning C4028: formal parameter 1 different from declaration
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(50,23): warning C4028: formal parameter 1 different from declaration
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Week 5\1.c(48): warning C4716: 'newNode': must return a value
+  Week 5.vcxproj -> C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 5\Debug\Week 5.exe
