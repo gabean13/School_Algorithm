@@ -30,7 +30,6 @@ Graph* initGraph(int vertexNum) {
 	return graph;
 }
 
-
 void insertEdge(Graph* graph, int vertex1, int vertex2) {
 
 	Node* newNode = (Node*)malloc(sizeof(Node));
