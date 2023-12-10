@@ -25,7 +25,7 @@ void initGraph(Graph* graph) {
 
 	for (int i = 0; i < VertexNum; i++) {
 		for (int j = 0; j < VertexNum; j++) {
-			graph->adjMat[i][j] = INT_MAX;
+			graph->adjMat[i][j] = 999999;
 		}
 	}
 
@@ -66,7 +66,7 @@ void primMST(Graph* graph) {
 	
 
 	for (int i = 0; i < VertexNum; i++) {
-		dist[i] = INT_MAX;
+		dist[i] = 999999;
 		visited[i] = 0;
 	}
 
@@ -77,24 +77,19 @@ void primMST(Graph* graph) {
 		minVertex = returnMinVertex();
 		visited[minVertex] = 1;
 
-		if (dist[minVertex] == INT_MAX) {
+		if (dist[minVertex] == 999999) {
 			return;
 		}
 
 		printf("%d ", minVertex);
 		for (int i = 0; i < VertexNum; i++) {
-			if (graph->adjMat[minVertex][i] != INT_MAX) {
+			if (graph->adjMat[minVertex][i] != 999999) {
 				if (!visited[i] && graph->adjMat[minVertex][i] < dist[i]) {
 					dist[i] = graph->adjMat[minVertex][i];
 				}
 			}
-		}
-
-		
+		}		
 	}
-
-	
-
 }
 
 int main() {

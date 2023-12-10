@@ -1,7 +1,5 @@
 ﻿  2.c
-C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(50,3): warning C4033: 'find' must return a value
-C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(93,43): warning C4090: 'function': different 'const' qualifiers
-C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(93,43): warning C4028: formal parameter 1 different from declaration
-C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(93,43): warning C4028: formal parameter 2 different from declaration
-C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(58): warning C4715: 'find': not all control paths return a value
-  Week 14.vcxproj -> C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Debug\Week 13.exe
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(37,23): warning C4101: 'vertex2': unreferenced local variable
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(37,6): warning C4101: 'weight': unreferenced local variable
+C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\2.c(37,14): warning C4101: 'vertex1': unreferenced local variable
+  Week 14.vcxproj -> C:\Users\gazet\OneDrive\문서\대학교\3-2\알고리즘\실습코드\Week 14\Week 14\Debug\Week 13.exe

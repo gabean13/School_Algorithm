@@ -2,139 +2,88 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int VertexNum, EdgeNum;
-
-typedef struct Graph {
-
-	int vertexNum;
-	int** adjMat;
-
-}Graph;
-
 typedef struct Edge {
 	int src;
 	int dest;
 	int weight;
 }Edge;
 
+typedef struct Graph {
+
+	int adjMat[101][101];
+
+}Graph;
+
+Edge* edges;
+int visited[101];
+int dist[101];
+
 void initGraph(Graph* graph) {
 
-	VertexNum++;
-
-	graph->adjMat = (int**)malloc(sizeof(int*) * VertexNum);
-	for (int i = 0; i < VertexNum; i++) {
-		*(graph->adjMat + i) = (int*)malloc(sizeof(int) * VertexNum);
-	}
-
-
-	for (int i = 0; i < VertexNum; i++) {
-		for (int j = 0; j < VertexNum; j++) {
-			graph->adjMat[i][j] = 999999;
+	for (int i = 0; i < 101; i++) {
+		for (int j = 0; j < 101; j++) {
+			if (i == j) {
+				graph->adjMat[i][j] = 0;
+			}
+			else {
+				graph->adjMat[i][j] = 999999;
+			}
 		}
 	}
-
-	graph->vertexNum = VertexNum - 1;
 }
 
-void insertEdge(Graph* graph, int vertex1, int vertex2, int weight) {
+void insertEdge(Graph* graph, int edgeNum) {
 
-	graph->adjMat[vertex1][vertex2] = weight;
-	graph->adjMat[vertex2][vertex1] = weight;
+	int weight, vertex1, vertex2;	
+
+	edges = (Edge*)malloc(sizeof(Edge) * edgeNum);
+
+	for (int i = 0; i < edgeNum; i++) {
+		scanf("%d %d %d", &edges[i].src, &edges[i].dest, &edges[i].weight);
+		graph->adjMat[edges[i].src][edges[i].dest] = edges[i].weight;
+	}
 
 	return;
 }
 
-int find(int* parent, int i) {
+void bellmanFord(Graph* graph,int edgeNum, int vertexNum ,int startVertex) {
 
-	if (i < 0 || i > VertexNum) {
-		return;
-	}
+	dist[startVertex] = 0;
+	int src, dest, weight;
 
-	if (parent[i] == -1) {
-		return i;
-	}
-	parent[i] = find(parent, parent[i]);
-	return parent[i];
-}
+	for (int i = 0; i < vertexNum + 1; i++) {
+		for (int j = 0; j < edgeNum; j++) {
+			src = edges[j].src;
+			dest = edges[j].dest;
+			weight = edges[j].weight;
 
-void unionSubset(int* parent, int x, int y) {
-	
-	int xSet = find(parent, x);
-	int ySet = find(parent, y);
-	parent[xSet] = ySet;
-}
-
-int compare(Edge* a, Edge* b) {
-
-	return a->weight - b->weight;
-
-}
-
-int kruskalMST(Graph* graph) {
-
-	int totalWeight = 0;
-	int i = 0;
-	int j = 0;
-	int count = 0;
-
-	struct Edge* edges = (Edge*)malloc(sizeof(Edge) * VertexNum * VertexNum);
-
-	for (int u = 0; u < VertexNum; u++) {
-		for (int v = u + 1; v < VertexNum; v++) {
-			if (graph->adjMat[u][v] != 999999) {
-				edges[i].src = u;
-				edges[i].dest = v;
-				edges[i].weight = graph->adjMat[u][v];
-				i++;
+			if (dist[src] != 999999 && dist[src] + weight < dist[dest]) {
+				dist[dest] = dist[src] + weight;
 			}
 		}
 	}
-
-	qsort(edges, i, sizeof(edges[0]), compare);
-
-	int* parent = (int*)malloc(sizeof(int) * VertexNum);
-	for (int v = 0; v < VertexNum; v++) {
-		parent[v] = -1;
-	}
-
-	i = 0;
-	while (j < VertexNum - 1 && i < VertexNum * (VertexNum - 1) / 2) {
-		Edge nextEdge = edges[i++];
-
-		count++;
-		//if (count > VertexNum) {
-		//	break;
-		//}
-		int x = find(parent, nextEdge.src);
-		int y = find(parent, nextEdge.dest);
-
-		if (x != y) {
-			printf(" %d", nextEdge.weight);
-			totalWeight += nextEdge.weight;
-			unionSubset(parent, x, y);
-			j++;
-		}
-	}
-
-	return totalWeight;
 }
 
 int main() {
 
 	Graph* graph = (Graph*)malloc(sizeof(Graph));
-	int vertex1, vertex2, weight;
-	int totalWeight;
+	
+	int vertexNum, edgeNum, startVertex;
 
-	scanf("%d %d", &VertexNum, &EdgeNum);
-
-	initGraph(graph);
-
-	for (int i = 0; i < EdgeNum; i++) {
-		scanf("%d %d %d", &vertex1, &vertex2, &weight);
-		insertEdge(graph, vertex1, vertex2, weight);
+	for (int i = 0; i < 101; i++) {
+		visited[i] = 0;
+		dist[i] = 999999;
 	}
+	scanf("%d %d %d", &vertexNum, &edgeNum, &startVertex);
+	initGraph(graph);
+	insertEdge(graph, edgeNum);
 
-	totalWeight = kruskalMST(graph);
-	printf("\n%d", totalWeight);
+	bellmanFord(graph, edgeNum, vertexNum, startVertex);
 
+	for (int i = 1; i < vertexNum + 1; i++) {
+		if (i == startVertex || dist[i] == 999999) {
+			continue;
+		}
+		printf("%d %d\n", i, dist[i]);
+	}
 }

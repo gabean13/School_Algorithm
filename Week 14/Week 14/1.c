@@ -2,37 +2,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int VertexNum, EdgeNum;
-int* dist;
-int* visited;
-
 typedef struct Graph {
 
 	int vertexNum;
-	int** adjMat;
+	int adjMat[101][101];
 
 }Graph;
 
+int visited[101];
+int dist[101];
+int vertexNum;
+
 void initGraph(Graph* graph) {
 
-	VertexNum++;
-
-	graph->adjMat = (int**)malloc(sizeof(int*) * VertexNum);
-	for (int i = 0; i < VertexNum; i++) {
-		*(graph->adjMat + i) = (int*)malloc(sizeof(int) * VertexNum);
-	}
-
-
-	for (int i = 0; i < VertexNum; i++) {
-		for (int j = 0; j < VertexNum; j++) {
-			graph->adjMat[i][j] = 999999;
+	graph->vertexNum = vertexNum;
+	for (int i = 0; i < 101; i++) {
+		for (int j = 0; j < 101; j++) {
+			if (i == j) {
+				graph->adjMat[i][j] = 0;
+			}
+			else {
+				graph->adjMat[i][j] = 999999;
+			}
 		}
 	}
-
-	graph->vertexNum = VertexNum - 1;
 }
 
 void insertEdge(Graph* graph, int vertex1, int vertex2, int weight) {
+
 
 	graph->adjMat[vertex1][vertex2] = weight;
 	graph->adjMat[vertex2][vertex1] = weight;
@@ -40,81 +37,67 @@ void insertEdge(Graph* graph, int vertex1, int vertex2, int weight) {
 	return;
 }
 
-int returnMinVertex() {
+int returnSmallIndex() {
 
-	int vertex = 0;
-
-	for (int i = 1; i < VertexNum; i++) {
-		if (!visited[i]) {
-			vertex = i;
-			break;
+	int min = 999999;
+	int index = 0;
+	for (int i = 0; i < vertexNum+1; i++) {
+		if (dist[i] < min && !visited[i]) {
+			min = dist[i];
+			index = i;
 		}
 	}
 
-	for (int i = 0; i < VertexNum; i++) {
-		if (!visited[i] && (dist[i] < dist[vertex])) {
-			vertex = i;
-		}
-	}
-
-	return vertex;
+	return index;
 }
 
-void primMST(Graph* graph) {
+void dijkstra(Graph* graph, int startVertex) {
 
-	int minVertex;
-	
+	int currentVertex;
 
-	for (int i = 0; i < VertexNum; i++) {
-		dist[i] = 999999;
-		visited[i] = 0;
+	for (int i = 0; i < vertexNum+1; i++) {
+		dist[i] = graph->adjMat[startVertex][i];
 	}
 
-	dist[1] = 0;
+	visited[startVertex] = 1;
 
-	for (int i = 0; i < VertexNum; i++) {
-
-		minVertex = returnMinVertex();
-		visited[minVertex] = 1;
-
-		if (dist[minVertex] == 999999) {
-			return;
-		}
-
-		printf("%d ", minVertex);
-		for (int i = 0; i < VertexNum; i++) {
-			if (graph->adjMat[minVertex][i] != 999999) {
-				if (!visited[i] && graph->adjMat[minVertex][i] < dist[i]) {
-					dist[i] = graph->adjMat[minVertex][i];
+	for (int i = 0; i < vertexNum - 1; i++) {
+		currentVertex = returnSmallIndex();
+		visited[currentVertex] = 1;
+		for (int j = 0; j < vertexNum + 1; j++) {
+			if (!visited[j]) {
+				if (dist[currentVertex] + graph->adjMat[currentVertex][j] < dist[j]) {
+					dist[j] = dist[currentVertex] + graph->adjMat[currentVertex][j];
 				}
 			}
-		}		
+		}
 	}
 }
 
 int main() {
 
 	Graph* graph = (Graph*)malloc(sizeof(Graph));
-	int vertex1, vertex2, weight;
-	int totalWeight = 0;
+	int weight, vertex1, vertex2;
+	int edgeNum, startVertex;
 
-	scanf("%d %d", &VertexNum, &EdgeNum);
-
+	for (int i = 0; i < 101; i++) {
+		visited[i] = 0;
+		dist[i] = 999999;
+	}
+	scanf("%d %d %d", &vertexNum, &edgeNum, &startVertex);
 	initGraph(graph);
 
-	visited = (int*)malloc(sizeof(int) * VertexNum);
-	dist = (int*)malloc(sizeof(int) * VertexNum);
-
-	for (int i = 0; i < EdgeNum; i++) {
+	for (int i = 0; i < edgeNum; i++) {
 		scanf("%d %d %d", &vertex1, &vertex2, &weight);
 		insertEdge(graph, vertex1, vertex2, weight);
 	}
-	
-	primMST(graph);
 
-	for (int i = 1; i < VertexNum; i++) {
-		totalWeight += dist[i];
+	dijkstra(graph, startVertex);
+
+	for (int i = 1; i < vertexNum + 1; i++) {
+		if (i == startVertex || dist[i] == 999999) {
+			continue;
+		}
+		printf("%d %d\n", i, dist[i]);
 	}
-
-	printf("\n%d", totalWeight);
 }
